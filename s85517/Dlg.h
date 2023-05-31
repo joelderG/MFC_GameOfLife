@@ -29,7 +29,7 @@ protected:
 	CDIB m_buff;
 	CSprite m_bkg;
 	CSprite m_font;
-	CSprite m_btn[2];
+	CSprite m_btn[3];
 	CSpriteList m_list;
 	CSprite* m_captured;
 	CPoint m_mPos;
@@ -42,4 +42,5 @@ protected:
 public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
