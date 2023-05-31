@@ -29,7 +29,6 @@ protected:
 	CDIB m_buff;
 	CSprite m_bkg;
 	CSprite m_font;
-	CSprite m_bar;
 	CSprite m_btn[3];
 	CSpriteList m_list;
 	CSprite* m_captured;

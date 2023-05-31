@@ -66,18 +66,11 @@ BOOL CDlg::OnInitDialog()
 	m_btn[1].SetZ(3);
 	m_btn[2].SetZ(3);
 	m_btn[0].SetPosition(178,365);
-	m_btn[1].SetPosition(295, 365);
+	m_btn[1].SetPosition(294, 365);
 	m_btn[2].SetPosition(411, 365);
 	m_btn[0].SetSpriteNumber(0, 0);
 	m_btn[1].SetSpriteNumber(0, 2);
-	m_btn[2].SetSpriteNumber(0, 6);
-	if (!m_bar.Load("buttonbar700x40.bmp")) {
-		AfxMessageBox(L"buttonbar700x40.bmp not found");
-		OnCancel();
-	}
-	m_bar.SetZ(2);
-	m_bar.SetPosition(0, 200);
-
+	m_btn[2].SetSpriteNumber(0, 5);
 
 	// add to spritelist
 	m_list.SetWorkspace(&m_buff);
@@ -86,7 +79,7 @@ BOOL CDlg::OnInitDialog()
 	m_list.Insert(&m_btn[0]);
 	m_list.Insert(&m_btn[1]);
 	m_list.Insert(&m_btn[2]);
-	m_list.Insert(&m_bar);
+	
 
 	SetWindowPos(NULL, 0, 0,
 		m_bkg.DibWidth() + 17,
@@ -95,6 +88,9 @@ BOOL CDlg::OnInitDialog()
 	);
 
 	SetTimer(1, 50, NULL);
+
+	SetTimer(0, 50, NULL);
+
 
 	SetIcon(m_hIcon, TRUE);			
 	SetIcon(m_hIcon, FALSE);		
@@ -165,6 +161,10 @@ void CDlg::OnMouseMove(UINT nFlags, CPoint point)
 			m_btn[1].SetSpriteNumber(0, 3);
 		}
 		else { m_btn[1].SetSpriteNumber(0, 2); }
+		if (hit == &m_btn[2]) {
+			m_btn[2].SetSpriteNumber(0, 6);
+		}
+		else { m_btn[2].SetSpriteNumber(0, 5); }
 	}
 
 	m_list.Update(&dc, 0, 0);
@@ -189,15 +189,11 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CDlg::OnTimer(UINT_PTR nIDEvent)
 {
+
 	static int i = 0;
 	CClientDC dc(this);
-	
-	if (m_font.GetXPos() < -m_font.GetXW() + 20) {
-		m_font.SetPosition(175, 200);
-	}
-	else {
-		m_font.SetPosition(175, 100);
-	}
+	if (m_font.GetYPos() == 50) { m_font.SetPosition(175, m_font.GetYPos() +2); }
+	if (m_font.GetYPos() == 100) { m_font.SetPosition(175, m_font.GetYPos() - 2); }
 	m_list.Update(&dc, 0, 0);
 	i++;
 
