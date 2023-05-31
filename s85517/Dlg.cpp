@@ -33,6 +33,7 @@ BEGIN_MESSAGE_MAP(CDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -55,19 +56,27 @@ BOOL CDlg::OnInitDialog()
 	}
 	m_font.SetZ(1);
 	m_font.SetPosition(175, 50);
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 		if (!m_btn[i].Load("buttons_111x31.bmp", CSize(111, 31))) {
 			AfxMessageBox(L"buttons_111x31.bmp not found");
 			OnCancel();
 		}
 	}
-	m_btn[0].SetZ(2);
-	m_btn[1].SetZ(2);
-	m_btn[0].SetPosition(50,200);
-	m_btn[1].SetPosition(50, 250);
+	m_btn[0].SetZ(3);
+	m_btn[1].SetZ(3);
+	m_btn[2].SetZ(3);
+	m_btn[0].SetPosition(178,365);
+	m_btn[1].SetPosition(295, 365);
+	m_btn[2].SetPosition(411, 365);
 	m_btn[0].SetSpriteNumber(0, 0);
 	m_btn[1].SetSpriteNumber(0, 2);
-
+	m_btn[2].SetSpriteNumber(0, 6);
+	if (!m_bar.Load("buttonbar700x40.bmp")) {
+		AfxMessageBox(L"buttonbar700x40.bmp not found");
+		OnCancel();
+	}
+	m_bar.SetZ(2);
+	m_bar.SetPosition(0, 200);
 
 
 	// add to spritelist
@@ -76,13 +85,16 @@ BOOL CDlg::OnInitDialog()
 	m_list.Insert(&m_font);
 	m_list.Insert(&m_btn[0]);
 	m_list.Insert(&m_btn[1]);
+	m_list.Insert(&m_btn[2]);
+	m_list.Insert(&m_bar);
 
 	SetWindowPos(NULL, 0, 0,
-		m_bkg.DibWidth(),
-		m_bkg.DibHeight() + 20,
+		m_bkg.DibWidth() + 17,
+		m_bkg.DibHeight() + 40,
 		SWP_NOZORDER | SWP_NOMOVE
 	);
 
+	SetTimer(1, 50, NULL);
 
 	SetIcon(m_hIcon, TRUE);			
 	SetIcon(m_hIcon, FALSE);		
@@ -165,10 +177,29 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	CClientDC dc(this);
 	CSprite* hit = m_list.HitTest(point);
 	if (hit == &m_btn[0]) {
-		m_list.Remove(&m_btn[1]);
-		m_list.Remove(&m_btn[0]);
 		m_list.Remove(&m_font);
 	}m_list.Update(&dc, 0, 0);
+	if (hit == &m_btn[2]) {
+		OnCancel();
+	}
 
 	CDialogEx::OnLButtonDown(nFlags, point);
+}
+
+
+void CDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	static int i = 0;
+	CClientDC dc(this);
+	
+	if (m_font.GetXPos() < -m_font.GetXW() + 20) {
+		m_font.SetPosition(175, 200);
+	}
+	else {
+		m_font.SetPosition(175, 100);
+	}
+	m_list.Update(&dc, 0, 0);
+	i++;
+
+	CDialogEx::OnTimer(nIDEvent);
 }
