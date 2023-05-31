@@ -7,6 +7,7 @@
 #include "s85517.h"
 #include "Dlg.h"
 #include "afxdialogex.h"
+#include "CUserInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,6 +72,21 @@ BOOL CDlg::OnInitDialog()
 	m_btn[0].SetSpriteNumber(0, 0);
 	m_btn[1].SetSpriteNumber(0, 2);
 	m_btn[2].SetSpriteNumber(0, 5);
+	for (int i = 0; i < 3; i++) {
+		if (!m_guibtn[i].Load("buttonsgui_111x31.bmp", CSize(111, 31))) {
+			AfxMessageBox(L"buttonsgui_111x31 not found");
+			OnCancel();
+		}
+	}
+	m_guibtn[0].SetZ(3);
+	m_guibtn[0].SetPosition(50, 50);
+	m_guibtn[0].SetSpriteNumber(0, 0);
+	m_guibtn[1].SetZ(3);
+	m_guibtn[1].SetPosition(50, 85);
+	m_guibtn[1].SetSpriteNumber(0, 2);
+	m_guibtn[2].SetZ(3);
+	m_guibtn[2].SetPosition(50, 50);
+	m_guibtn[2].SetSpriteNumber(0, 4);
 
 	// add to spritelist
 	m_list.SetWorkspace(&m_buff);
@@ -80,6 +96,7 @@ BOOL CDlg::OnInitDialog()
 	m_list.Insert(&m_btn[1]);
 	m_list.Insert(&m_btn[2]);
 	
+	
 
 	SetWindowPos(NULL, 0, 0,
 		m_bkg.DibWidth() + 17,
@@ -87,10 +104,7 @@ BOOL CDlg::OnInitDialog()
 		SWP_NOZORDER | SWP_NOMOVE
 	);
 
-	SetTimer(1, 50, NULL);
-
 	SetTimer(0, 50, NULL);
-
 
 	SetIcon(m_hIcon, TRUE);			
 	SetIcon(m_hIcon, FALSE);		
@@ -165,6 +179,17 @@ void CDlg::OnMouseMove(UINT nFlags, CPoint point)
 			m_btn[2].SetSpriteNumber(0, 6);
 		}
 		else { m_btn[2].SetSpriteNumber(0, 5); }
+		if (hit == &m_guibtn[0]) {
+			m_guibtn[0].SetSpriteNumber(0, 1);
+		}
+		else { m_guibtn[0].SetSpriteNumber(0, 0); }
+		if (hit == &m_guibtn[1]) {
+			m_guibtn[1].SetSpriteNumber(0, 3);
+		}else { m_guibtn[1].SetSpriteNumber(0, 2); }
+		if (hit == &m_guibtn[2]) {
+			m_guibtn[2].SetSpriteNumber(0, 5);
+		}
+		else { m_guibtn[2].SetSpriteNumber(0, 4); }
 	}
 
 	m_list.Update(&dc, 0, 0);
@@ -178,22 +203,29 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	CSprite* hit = m_list.HitTest(point);
 	if (hit == &m_btn[0]) {
 		m_list.Remove(&m_font);
-	}m_list.Update(&dc, 0, 0);
+		m_list.Insert(&m_guibtn[0]);
+
+	}
 	if (hit == &m_btn[2]) {
 		OnCancel();
 	}
-
+	if (hit == &m_guibtn[0]) {
+		m_list.Remove(&m_guibtn[0]);
+		m_list.Insert(&m_guibtn[1]);
+		m_list.Insert(&m_guibtn[2]);
+	}
+	m_list.Update(&dc, 0, 0);
 	CDialogEx::OnLButtonDown(nFlags, point);
 }
 
 
 void CDlg::OnTimer(UINT_PTR nIDEvent)
 {
-
+	int yPos = m_font.GetYPos();
+	int xPos = m_font.GetXPos();
 	static int i = 0;
 	CClientDC dc(this);
-	if (m_font.GetYPos() == 50) { m_font.SetPosition(175, m_font.GetYPos() +2); }
-	if (m_font.GetYPos() == 100) { m_font.SetPosition(175, m_font.GetYPos() - 2); }
+
 	m_list.Update(&dc, 0, 0);
 	i++;
 

@@ -4,6 +4,7 @@
 
 #pragma once
 #include "spritelib.h"
+#include "CUserInterface.h"
 
 
 // CDlg-Dialogfeld
@@ -30,6 +31,7 @@ protected:
 	CSprite m_bkg;
 	CSprite m_font;
 	CSprite m_btn[3];
+	CSprite m_guibtn[3];
 	CSpriteList m_list;
 	CSprite* m_captured;
 	CPoint m_mPos;

@@ -39,6 +39,9 @@
     <ClInclude Include="XUnzip.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="CUserInterface.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="s85517.cpp">
@@ -54,6 +57,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="XUnzip.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="CUserInterface.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
