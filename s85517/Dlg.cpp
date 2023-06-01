@@ -66,7 +66,7 @@ BOOL CDlg::OnInitDialog()
 	m_btn[0].SetZ(3);
 	m_btn[1].SetZ(3);
 	m_btn[2].SetZ(3);
-	m_btn[0].SetPosition(178,365);
+	m_btn[0].SetPosition(178, 365);
 	m_btn[1].SetPosition(294, 365);
 	m_btn[2].SetPosition(411, 365);
 	m_btn[0].SetSpriteNumber(0, 0);
@@ -78,6 +78,10 @@ BOOL CDlg::OnInitDialog()
 			OnCancel();
 		}
 	}
+	if (!m_guibtn[3].Load("buttonsdata_111x31.bmp", CSize(111, 31))) {
+		AfxMessageBox(L"buttonsdata_111x31.bmp not found");
+		OnCancel();
+	}
 	m_guibtn[0].SetZ(3);
 	m_guibtn[0].SetPosition(50, 50);
 	m_guibtn[0].SetSpriteNumber(0, 0);
@@ -87,7 +91,25 @@ BOOL CDlg::OnInitDialog()
 	m_guibtn[2].SetZ(3);
 	m_guibtn[2].SetPosition(50, 50);
 	m_guibtn[2].SetSpriteNumber(0, 4);
+	m_guibtn[3].SetZ(3);
+	m_guibtn[3].SetPosition(50, 85);
+	m_guibtn[3].SetSpriteNumber(0, 0);
 
+	for (int i = 0; i < 3; i++) {
+		if (!m_filebtn[i].Load("buttonsfile_111x31.bmp", CSize(111, 31))) {
+			AfxMessageBox(L"buttonsfile_111x31.bmp not found");
+			OnCancel();
+		}
+	}
+	m_filebtn[0].SetZ(3);
+	m_filebtn[0].SetPosition(50, 50);
+	m_filebtn[0].SetSpriteNumber(0, 0);
+	m_filebtn[1].SetZ(3);
+	m_filebtn[1].SetPosition(50, 85);
+	m_filebtn[1].SetSpriteNumber(0, 2);
+	m_filebtn[2].SetZ(3);
+	m_filebtn[2].SetPosition(50, 120);
+	m_filebtn[2].SetSpriteNumber(0, 4);
 	// add to spritelist
 	m_list.SetWorkspace(&m_buff);
 	m_list.Insert(&m_bkg);
@@ -190,6 +212,22 @@ void CDlg::OnMouseMove(UINT nFlags, CPoint point)
 			m_guibtn[2].SetSpriteNumber(0, 5);
 		}
 		else { m_guibtn[2].SetSpriteNumber(0, 4); }
+		if (hit == &m_guibtn[3]) {
+			m_guibtn[3].SetSpriteNumber(0, 1);
+		}
+		else { m_guibtn[3].SetSpriteNumber(0, 0); }
+		if (hit == &m_filebtn[0]) {
+			m_filebtn[0].SetSpriteNumber(0, 1);
+		}
+		else { m_filebtn[0].SetSpriteNumber(0, 0); }
+		if (hit == &m_filebtn[1]) {
+			m_filebtn[1].SetSpriteNumber(0, 3);
+		}
+		else { m_filebtn[1].SetSpriteNumber(0, 2); }
+		if (hit == &m_filebtn[2]) {
+			m_filebtn[2].SetSpriteNumber(0, 5);
+		}
+		else { m_filebtn[2].SetSpriteNumber(0, 4); }
 	}
 
 	m_list.Update(&dc, 0, 0);
@@ -204,6 +242,7 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	if (hit == &m_btn[0]) {
 		m_list.Remove(&m_font);
 		m_list.Insert(&m_guibtn[0]);
+		m_list.Insert(&m_guibtn[3]);
 
 	}
 	if (hit == &m_btn[2]) {
@@ -211,8 +250,16 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 	if (hit == &m_guibtn[0]) {
 		m_list.Remove(&m_guibtn[0]);
-		m_list.Insert(&m_guibtn[1]);
-		m_list.Insert(&m_guibtn[2]);
+		m_list.Remove(&m_guibtn[3]);
+		//m_list.Insert(&m_guibtn[1]);
+		//m_list.Insert(&m_guibtn[2]);
+	}
+	if (hit == &m_guibtn[3]) {
+		m_list.Remove(&m_guibtn[0]);
+		m_list.Remove(&m_guibtn[3]);
+		m_list.Insert(&m_filebtn[0]);
+		m_list.Insert(&m_filebtn[1]);
+		m_list.Insert(&m_filebtn[2]);
 	}
 	m_list.Update(&dc, 0, 0);
 	CDialogEx::OnLButtonDown(nFlags, point);

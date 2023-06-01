@@ -31,7 +31,8 @@ protected:
 	CSprite m_bkg;
 	CSprite m_font;
 	CSprite m_btn[3];
-	CSprite m_guibtn[3];
+	CSprite m_guibtn[4];
+	CSprite m_filebtn[3];
 	CSpriteList m_list;
 	CSprite* m_captured;
 	CPoint m_mPos;
