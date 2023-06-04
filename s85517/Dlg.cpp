@@ -7,7 +7,6 @@
 #include "s85517.h"
 #include "Dlg.h"
 #include "afxdialogex.h"
-#include "CUserInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -44,19 +43,19 @@ BOOL CDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	if (!m_bkg.Load("background700x400.bmp")) {
-		AfxMessageBox(L"background700x400.bmp not found");
+	if (!m_bkg.Load("background500x600.bmp")) {
+		AfxMessageBox(L"background500x600.bmp not found");
 		OnCancel();
 	}
 	m_bkg.SetZ(0);
-	m_buff.Load("background700x400.bmp");
+	m_buff.Load("background500x600.bmp");
 
 	if (!m_font.Load("name350x125.bmp")) {
 		AfxMessageBox(L"name350x125.bmp not found");
 		OnCancel();
 	}
 	m_font.SetZ(1);
-	m_font.SetPosition(175, 50);
+	m_font.SetPosition(75, 50);
 	for (int i = 0; i < 3; i++) {
 		if (!m_btn[i].Load("buttons_111x31.bmp", CSize(111, 31))) {
 			AfxMessageBox(L"buttons_111x31.bmp not found");
@@ -66,9 +65,9 @@ BOOL CDlg::OnInitDialog()
 	m_btn[0].SetZ(3);
 	m_btn[1].SetZ(3);
 	m_btn[2].SetZ(3);
-	m_btn[0].SetPosition(178, 365);
-	m_btn[1].SetPosition(294, 365);
-	m_btn[2].SetPosition(411, 365);
+	m_btn[0].SetPosition(80, 554);
+	m_btn[1].SetPosition(195, 554);
+	m_btn[2].SetPosition(310, 554);
 	m_btn[0].SetSpriteNumber(0, 0);
 	m_btn[1].SetSpriteNumber(0, 2);
 	m_btn[2].SetSpriteNumber(0, 5);
@@ -83,16 +82,16 @@ BOOL CDlg::OnInitDialog()
 		OnCancel();
 	}
 	m_guibtn[0].SetZ(3);
-	m_guibtn[0].SetPosition(50, 50);
+	m_guibtn[0].SetPosition(50, 180);
 	m_guibtn[0].SetSpriteNumber(0, 0);
 	m_guibtn[1].SetZ(3);
-	m_guibtn[1].SetPosition(50, 85);
+	m_guibtn[1].SetPosition(50, 215);
 	m_guibtn[1].SetSpriteNumber(0, 2);
 	m_guibtn[2].SetZ(3);
-	m_guibtn[2].SetPosition(50, 50);
+	m_guibtn[2].SetPosition(50, 180);
 	m_guibtn[2].SetSpriteNumber(0, 4);
 	m_guibtn[3].SetZ(3);
-	m_guibtn[3].SetPosition(50, 85);
+	m_guibtn[3].SetPosition(50, 215);
 	m_guibtn[3].SetSpriteNumber(0, 0);
 
 	for (int i = 0; i < 3; i++) {
@@ -102,13 +101,13 @@ BOOL CDlg::OnInitDialog()
 		}
 	}
 	m_filebtn[0].SetZ(3);
-	m_filebtn[0].SetPosition(50, 50);
+	m_filebtn[0].SetPosition(50, 180);
 	m_filebtn[0].SetSpriteNumber(0, 0);
 	m_filebtn[1].SetZ(3);
-	m_filebtn[1].SetPosition(50, 85);
+	m_filebtn[1].SetPosition(50, 215);
 	m_filebtn[1].SetSpriteNumber(0, 2);
 	m_filebtn[2].SetZ(3);
-	m_filebtn[2].SetPosition(50, 120);
+	m_filebtn[2].SetPosition(50, 250);
 	m_filebtn[2].SetSpriteNumber(0, 4);
 	// add to spritelist
 	m_list.SetWorkspace(&m_buff);
@@ -240,7 +239,6 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	CClientDC dc(this);
 	CSprite* hit = m_list.HitTest(point);
 	if (hit == &m_btn[0]) {
-		m_list.Remove(&m_font);
 		m_list.Insert(&m_guibtn[0]);
 		m_list.Insert(&m_guibtn[3]);
 
@@ -260,6 +258,13 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 		m_list.Insert(&m_filebtn[0]);
 		m_list.Insert(&m_filebtn[1]);
 		m_list.Insert(&m_filebtn[2]);
+	}
+	if (hit == &m_filebtn[0] || hit == &m_filebtn[1] || hit == &m_filebtn[2]) {
+		m_list.Insert(&m_guibtn[1]);
+		m_list.Insert(&m_guibtn[2]);
+		m_list.Remove(&m_filebtn[0]);
+		m_list.Remove(&m_filebtn[1]);
+		m_list.Remove(&m_filebtn[2]);
 	}
 	m_list.Update(&dc, 0, 0);
 	CDialogEx::OnLButtonDown(nFlags, point);

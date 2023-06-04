@@ -39,7 +39,10 @@
     <ClInclude Include="XUnzip.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="CUserInterface.h">
+    <ClInclude Include="CLife.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="CCell.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,7 +62,10 @@
     <ClCompile Include="XUnzip.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="CUserInterface.cpp">
+    <ClCompile Include="CLife.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="CCell.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

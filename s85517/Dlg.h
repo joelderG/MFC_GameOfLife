@@ -4,8 +4,8 @@
 
 #pragma once
 #include "spritelib.h"
-#include "CUserInterface.h"
-
+#include "CCell.h"
+#include "CLife.h"
 
 // CDlg-Dialogfeld
 class CDlg : public CDialogEx
