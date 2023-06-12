@@ -32,7 +32,7 @@ void CLife::setcell(int x, int y, bool state) {
 }
 
 void CLife::loadstartstates(const std::string& filename) {
-
+	
 }
 
 void CLife::run() {
@@ -40,20 +40,13 @@ void CLife::run() {
 }
 
 void CLife::randomstartstate(double percentage) {
-	//if (percentage < 0.0 || percentage > 100.0) {
-	//	std::cerr << "Percentage should be betweem 0.0 and 100.0" << std::endl;
-	//	return;
-	//}
-
-	//std::srand(static_cast<unsigned int>(std::time(nullptr)));
-	//int totalcells = rows * cols;
-	//int alivecells = static_cast<int>(percentage / 100.0 * totalcells);
-
-	//for (int i = 0; i < rows; i++) {
-	//	for (int j = 0; j < cols; j++) {
-	//		setcell(x, y, false);
-	//	}
-	//}
-
-	//while()
+	for(int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++) {
+			if (rand() % 100 < percentage) {
+				grid[i][j].setAlive(true);
+			}
+			else {
+				grid[i][j].setAlive(false);
+			}
+		}
 }
