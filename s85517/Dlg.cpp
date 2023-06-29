@@ -238,30 +238,29 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CClientDC dc(this);
 	CSprite* hit = m_list.HitTest(point);
-	if (hit == &m_btn[0]) {
-		m_list.Insert(&m_guibtn[0]);
-		m_list.Insert(&m_guibtn[3]);
-
+	if (hit == &m_btn[0]) { // button start
+		m_list.Insert(&m_guibtn[0]); // button Zufallsstart
+		m_list.Insert(&m_guibtn[3]); // button Datei
 	}
-	if (hit == &m_btn[2]) {
+	if (hit == &m_btn[2]) { // button cancel
 		OnCancel();
 	}
-	if (hit == &m_guibtn[0]) {
+	if (hit == &m_guibtn[0]) { // button Zufallsstart
+		m_list.Remove(&m_guibtn[0]);
+		m_list.Remove(&m_guibtn[3]); 
+		m_list.Insert(&m_guibtn[1]); // button animiert
+		m_list.Insert(&m_guibtn[2]); // button schrittweise
+	}
+	if (hit == &m_guibtn[3]) { // button Datei
 		m_list.Remove(&m_guibtn[0]);
 		m_list.Remove(&m_guibtn[3]);
-		//m_list.Insert(&m_guibtn[1]);
-		//m_list.Insert(&m_guibtn[2]);
+		m_list.Insert(&m_filebtn[0]); // button Datei 1
+		m_list.Insert(&m_filebtn[1]); // button Datei 2
+		m_list.Insert(&m_filebtn[2]); // button Datei 3
 	}
-	if (hit == &m_guibtn[3]) {
-		m_list.Remove(&m_guibtn[0]);
-		m_list.Remove(&m_guibtn[3]);
-		m_list.Insert(&m_filebtn[0]);
-		m_list.Insert(&m_filebtn[1]);
-		m_list.Insert(&m_filebtn[2]);
-	}
-	if (hit == &m_filebtn[0] || hit == &m_filebtn[1] || hit == &m_filebtn[2]) {
-		m_list.Insert(&m_guibtn[1]);
-		m_list.Insert(&m_guibtn[2]);
+	if (hit == &m_filebtn[0] || hit == &m_filebtn[1] || hit == &m_filebtn[2]) { // button Datei 1, 2, 3
+		m_list.Insert(&m_guibtn[1]); // button animiert
+		m_list.Insert(&m_guibtn[2]); // button schrittweise
 		m_list.Remove(&m_filebtn[0]);
 		m_list.Remove(&m_filebtn[1]);
 		m_list.Remove(&m_filebtn[2]);
@@ -273,8 +272,6 @@ void CDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	int yPos = m_font.GetYPos();
-	int xPos = m_font.GetXPos();
 	static int i = 0;
 	CClientDC dc(this);
 
